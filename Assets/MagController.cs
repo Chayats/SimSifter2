@@ -17,6 +17,10 @@ public class MagController : MonoBehaviour
         instance = this;
     }
 
+    public void UpdateForce(float x)
+    {
+        force = x;
+    }
     // Update is called once per frame
     void Update()
     {
