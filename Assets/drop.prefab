@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7422463751839036986}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.61625, y: 0.20129, z: 3.5846705}
-  m_LocalScale: {x: 0.5121352, y: 0.5121352, z: 0.5121352}
+  m_LocalScale: {x: 1.101654, y: 1.101654, z: 1.101654}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -133,3 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnetic: 0
+  taint: 0.968
+  clean: {r: 0.19241722, g: 0.8103112, b: 0.8679245, a: 0.5372549}
+  dirty: {r: 0.509434, g: 0.33154595, b: 0.016820943, a: 1}
+  SR: {fileID: 7422463751839036967}

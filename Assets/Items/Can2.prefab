@@ -135,6 +135,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magnetic: 1
+  taint: 0
+  clean: {r: 0, g: 0, b: 0, a: 0}
+  dirty: {r: 0, g: 0, b: 0, a: 0}
+  SR: {fileID: 7422463751839036967}
 --- !u!61 &9148731466289528257
 BoxCollider2D:
   m_ObjectHideFlags: 0

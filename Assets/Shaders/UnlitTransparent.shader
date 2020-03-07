@@ -12,12 +12,15 @@ Shader "VueCode/UnlitMod"
 
 				_Stroke2 ("Stroke Alpha", Range(0,1)) = 0.1
 		_StrokeColor2 ("Stroke Color", Color) = (1,1,1,1)
+
+			_Pure ("Blue Value for Pure", Range(0,1))  = 0.1
+			_PureColor1("Pure Color", Color) = (1,1,1,.5)
 	}
 	SubShader
 	{
-		Tags {"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout" }
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
 		LOD 100
-
+		 Blend SrcAlpha OneMinusSrcAlpha
 		Lighting Off
 
 		Pass
@@ -27,7 +30,7 @@ Shader "VueCode/UnlitMod"
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-
+			  
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -49,8 +52,10 @@ Shader "VueCode/UnlitMod"
 			fixed _Stroke;
 			half4 _StrokeColor;
 
-						fixed _Stroke2;
+			fixed _Stroke2;
 			half4 _StrokeColor2;
+			fixed _Pure;
+			float4 _PureColor1;
 			
 			v2f vert (appdata v)
 			{
@@ -60,17 +65,21 @@ Shader "VueCode/UnlitMod"
 				return o;
 			}
 			
-			fixed4 frag (v2f i) : SV_Target
+			float4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.texcoord);
-				fixed4 fragcol = col;
-				clip(col.a - _Cutoff);
+				float4 col = tex2D(_MainTex, i.texcoord);
 				
+				clip(col.a - _Cutoff);
+				float4 fragcol = col;
+				//
+				fragcol.a = 1;
+				//if(col.a < _Stroke) fragcol = _StrokeColor;
+				//else if (col.a < _Stroke2) fragcol = _StrokeColor2;
+				//else 	  fragcol = _Color;
 
-				if(col.a < _Stroke) fragcol = _StrokeColor;
-				else if (col.a < _Stroke2) fragcol = _StrokeColor2;
-				else 	  fragcol = _Color;
+				//if (col.b > _Pure) fragcol = _PureColor1;
+
 				return fragcol;
 			}
 			ENDCG

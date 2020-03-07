@@ -7,13 +7,17 @@ public class drop : MonoBehaviour
     Rigidbody2D RB;
     public bool magnetic = false;
 
-
-    
+    [Range (0,1)]
+    public float taint;
+    public Color clean;
+    public Color dirty;
+    public SpriteRenderer SR;
     
     
     void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
+        ColorUpdate();
     }
 
     // Update is called once per frame
@@ -22,13 +26,32 @@ public class drop : MonoBehaviour
         if (Vector2.Distance(transform.position, Outflow.instance.transform.position) < .7)
         {
             transform.position = Inflow.instance.transform.position;
-            RB.velocity = Vector2.zero;
+            RB.velocity = Vector2.zero;  
         }
+
+        if (Vector2.Distance(transform.position, CleanerIN.instance.transform.position) < .3)
+        {
+            transform.position = CleanerOut.instance.transform.position;
+            RB.velocity = Vector2.zero;
+            taint = taint - .5f;
+            ColorUpdate();
+            if (taint < 0) taint = 0;
+        }
+
+    }
+
+    public void ColorUpdate()
+    {
+        Color set;
+        set.r = Mathf.Lerp(clean.r, dirty.r, taint);
+        set.g = Mathf.Lerp(clean.g, dirty.g, taint);
+        set.b = Mathf.Lerp(clean.b, dirty.b, taint);
+        set.a = Mathf.Lerp(clean.a, dirty.a, taint*taint);
+        SR.color = set;
     }
 
     void FixedUpdate()
     {
-        
 
         if (magnetic)
         {
