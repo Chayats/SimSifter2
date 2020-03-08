@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Spawner : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -32,7 +33,7 @@ public class Spawner : MonoBehaviour
         if (spawned < amount)
         {
             GameObject bob;
-            if (spawned%rate != 0)
+            if (spawned % rate != 0 || items.Length == 0)
             {
                  bob = Instantiate(drop);
                 
@@ -53,6 +54,12 @@ public class Spawner : MonoBehaviour
             bob.transform.parent = parent.transform;
             spawned++;
         }
+
+ 
+
+
+
+
     }
 
     private void FixedUpdate()
@@ -68,6 +75,11 @@ public class Spawner : MonoBehaviour
             taint += item.GetComponent<drop>().taint;
         }
         cleanness.value = amount - taint;
+
+        if(taint <29 &&spawned>30)
+        {
+            DONOT.instance.ReturnToMENU();
+        }
     }
 
 
